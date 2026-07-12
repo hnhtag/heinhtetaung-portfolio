@@ -97,7 +97,7 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
 
       <!-- Role tags -->
       <p class="text-xs text-[#444] font-mono tracking-wide">
-        {siteProfile.title}&nbsp;&nbsp;·&nbsp;&nbsp;<span id="yoe" data-career-start={siteProfile.careerStartDate}>{yearsExperienceLabel}</span> Years Experience&nbsp;&nbsp;·&nbsp;&nbsp;Vue.js&nbsp;&nbsp;·&nbsp;&nbsp;React&nbsp;&nbsp;·&nbsp;&nbsp;Full-Stack
+        <span id="yoe" data-career-start={siteProfile.careerStartDate}>{yearsExperienceLabel}</span> Years Experience&nbsp;&nbsp;·&nbsp;&nbsp;{siteProfile.title}
       </p>
     </div>
   </section>
