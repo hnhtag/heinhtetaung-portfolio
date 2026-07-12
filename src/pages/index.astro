@@ -194,10 +194,7 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
           <h3 class="text-xs font-mono text-[#555] uppercase tracking-widest mb-4">{label}</h3>
           <ul class="space-y-2" role="list">
             {items.map((s) => (
-              <li class="text-sm text-[#888] flex items-center justify-between gap-3">
-                <span>{s.name}</span>
-                <span class="text-[11px] uppercase tracking-wide text-[#555]">{s.proficiency}</span>
-              </li>
+              <li class="text-sm text-[#888]">{s.name}</li>
             ))}
           </ul>
         </div>
