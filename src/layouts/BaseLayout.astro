@@ -1,0 +1,156 @@
+---
+import { siteProfile, siteSettings } from "@/lib/site-content";
+import "@/styles/global.css";
+
+interface Props {
+  title?:       string;
+  description?: string;
+  ogImage?:     string;
+  canonical?:   string;
+}
+
+const {
+  title       = siteSettings.siteTitle,
+  description = siteSettings.siteDescription,
+  ogImage     = siteSettings.ogImageUrl,
+  canonical   = new URL(Astro.url.pathname, "https://heinhtetaung.com").href,
+} = Astro.props;
+
+const faviconUrl = siteSettings.faviconUrl || "/favicon.ico";
+const displayName = siteProfile.displayName;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="author" content="Hein Htet Aung" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/x-icon" href={faviconUrl} />
+
+  <meta property="og:title"       content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url"         content={canonical} />
+  <meta property="og:type"        content="website" />
+  {ogImage && <meta property="og:image" content={ogImage} />}
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content={title} />
+  <meta name="twitter:description" content={description} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+  <title>{title}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body class="bg-surface text-[#f0f0f0] font-sans antialiased min-h-screen">
+
+  <!-- Skip link (a11y) -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded">
+    Skip to content
+  </a>
+
+  <!-- Navigation -->
+  <header id="site-header" class="fixed top-0 left-0 right-0 z-50" style="transition: transform 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;">
+    <nav class="max-w-5xl mx-auto px-6 flex items-center justify-between h-14" aria-label="Primary navigation">
+
+      <!-- Name / logo -->
+      <a href="/#hero" class="font-medium text-sm text-[#f0f0f0] hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded">
+        {displayName}
+      </a>
+
+      <!-- Desktop anchor links -->
+      <ul class="hidden md:flex items-center gap-7 text-sm" role="list">
+        {[
+          { href: "/#work",       label: "Work"       },
+          { href: "/#experience", label: "Experience" },
+          { href: "/#skills",     label: "Skills"     },
+          { href: "/#about",      label: "About"      },
+        ].map(({ href, label }) => (
+          <li>
+            <a href={href} class="text-[#888] hover:text-[#f0f0f0] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded px-1">
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Contact CTA -->
+      <a href="/#contact" class="text-sm px-4 py-1.5 border border-[#2a2a2a] rounded-full text-[#aaa] hover:border-[#555] hover:text-[#f0f0f0] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white">
+        Contact
+      </a>
+    </nav>
+  </header>
+
+  <!-- Main content -->
+  <main id="main-content" tabindex="-1">
+    <slot />
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-[#1e1e1e] py-8 mt-24">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#444]">
+      <p>&copy; {new Date().getFullYear()} {displayName}</p>
+      <p>Built with Astro on Cloudflare Workers</p>
+    </div>
+  </footer>
+
+  <script is:inline>
+    // Sticky nav: transparent at top -> frosted glass on scroll
+    // Hides when scrolling down, reveals when scrolling up
+    (function () {
+      var header = document.getElementById("site-header");
+      if (!header) return;
+
+      var lastY = window.pageYOffset;
+      var ticking = false;
+
+      function applyScroll() {
+        var y = window.pageYOffset;
+
+        if (y > 80) {
+          header.style.backgroundColor = "rgba(10,10,10,0.9)";
+          header.style.backdropFilter = "blur(14px)";
+          header.style.webkitBackdropFilter = "blur(14px)";
+          header.style.borderBottom = "1px solid #1e1e1e";
+
+          if (y > lastY + 4) {
+            header.style.transform = "translateY(-100%)";
+          } else if (y < lastY - 4) {
+            header.style.transform = "translateY(0)";
+          }
+        } else {
+          header.style.transform = "translateY(0)";
+          header.style.backgroundColor = "transparent";
+          header.style.backdropFilter = "none";
+          header.style.webkitBackdropFilter = "none";
+          header.style.borderBottom = "none";
+        }
+
+        lastY = y;
+        ticking = false;
+      }
+
+      window.addEventListener(
+        "scroll",
+        function () {
+          if (!ticking) {
+            requestAnimationFrame(applyScroll);
+            ticking = true;
+          }
+        },
+        { passive: true }
+      );
+
+      applyScroll();
+    })();
+  </script>
+
+</body>
+</html>

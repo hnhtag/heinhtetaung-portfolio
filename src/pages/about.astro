@@ -1,0 +1,100 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { education, experiences, siteProfile, skills } from "@/lib/site-content";
+
+const skillGroups = {
+  "Core Languages": skills.filter((s) => s.category === "core"),
+  "Frameworks & Libraries": skills.filter((s) => s.category === "framework"),
+  "Tools & Practices": skills.filter((s) => s.category === "tool"),
+  "Domain Expertise": skills.filter((s) => s.category === "domain"),
+};
+
+function formatPeriod(start: string, end: string | null): string {
+  const fmt = (d: string) => {
+    const [y, m] = d.split("-");
+    return `${new Date(Number(y), Number(m) - 1).toLocaleString("default", { month: "short" })} ${y}`;
+  };
+  return `${fmt(start)} – ${end ? fmt(end) : "Present"}`;
+}
+---
+
+<BaseLayout
+  title="About — Hein Htet Aung"
+  description="7+ years building FinTech, ERP, and enterprise web applications. Full stack engineer and team lead."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-20">
+
+    <!-- About intro ─────────────────────────────────────────────────── -->
+    <section class="mb-16">
+      <h1 class="section-heading mb-6">About Me</h1>
+      {siteProfile.aboutBio.split("\n\n").map((para) => (
+        <p class="text-neutral-300 leading-relaxed mb-4 max-w-3xl">{para}</p>
+      ))}
+    </section>
+
+    <!-- Skills ──────────────────────────────────────────────────────── -->
+    <section class="mb-16">
+      <h2 class="section-heading mb-8">Tech Stack</h2>
+      <div class="grid sm:grid-cols-2 gap-6">
+        {Object.entries(skillGroups).map(([label, items]) => (
+          <div class="card-glow">
+            <h3 class="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-4">{label}</h3>
+            <div class="flex flex-wrap gap-2">
+              {items.map((s) => <span class="badge">{s.name}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Experience timeline ──────────────────────────────────────────── -->
+    <section class="mb-16">
+      <h2 class="section-heading mb-8">Experience</h2>
+      <ol class="relative border-l border-surface-border space-y-10 ml-3">
+        {experiences.map((exp) => (
+          <li class="pl-8 relative">
+            <span class="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-brand shadow-glow-sm" aria-hidden="true"></span>
+            <p class="font-mono text-xs text-brand mb-1">{formatPeriod(exp.periodStart, exp.periodEnd)}</p>
+            <h3 class="font-semibold text-neutral-100">{exp.role}</h3>
+            <p class="text-sm text-neutral-400 mb-3">{exp.company} · {exp.location}</p>
+            <ul class="space-y-1">
+              {exp.highlights.map((h) => (
+                <li class="text-sm text-neutral-300 flex gap-2">
+                  <span class="text-brand mt-0.5 flex-shrink-0">›</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- Education ───────────────────────────────────────────────────── -->
+    <section>
+      <h2 class="section-heading mb-8">Education</h2>
+      <div class="space-y-6">
+        {education.map((edu) => (
+          <div class="card-glow">
+            <p class="font-mono text-xs text-brand mb-1">
+              {edu.periodStart.split("-")[0]} – {edu.periodEnd ? edu.periodEnd.split("-")[0] : "Present"}
+            </p>
+            <h3 class="font-semibold text-neutral-100">{edu.degree} — {edu.field}</h3>
+            <p class="text-sm text-neutral-400 mb-3">{edu.institution}</p>
+            {edu.achievements.length > 0 && (
+              <ul class="space-y-1">
+                {edu.achievements.map((a) => (
+                  <li class="text-sm text-neutral-300 flex gap-2">
+                    <span class="text-brand flex-shrink-0">›</span>
+                    <span>{a}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>

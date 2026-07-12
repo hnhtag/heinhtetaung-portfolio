@@ -1,0 +1,307 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  education,
+  experiences,
+  projects,
+  siteProfile,
+  siteSettings,
+  skills,
+} from "@/lib/site-content";
+
+const skillGroups: Record<string, typeof skills> = {
+  "Core":       skills.filter((s) => s.category === "core"),
+  "Frameworks": skills.filter((s) => s.category === "framework"),
+  "Practices":  skills.filter((s) => s.category === "tool"),
+  "Domain":     skills.filter((s) => s.category === "domain"),
+};
+
+function fmt(d: string): string {
+  const [y, m] = d.split("-");
+  return `${new Date(Number(y), Number(m) - 1).toLocaleString("en", { month: "short" })} ${y}`;
+}
+function period(start: string, end: string | null): string {
+  return `${fmt(start)} – ${end ? fmt(end) : "Present"}`;
+}
+
+function yearsOfExperience(startDate: string): string {
+  const start = new Date(startDate);
+  const now = new Date();
+  let years = now.getFullYear() - start.getFullYear();
+  const beforeAnniversary =
+    now.getMonth() < start.getMonth() ||
+    (now.getMonth() === start.getMonth() && now.getDate() < start.getDate());
+  if (beforeAnniversary) years -= 1;
+  return `${Math.max(0, years)}+`;
+}
+
+const heroBg = siteSettings.heroBgUrl;
+const featuredProjects = projects.filter((p) => p.featured);
+const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
+---
+
+<BaseLayout
+  title="Hein Htet Aung — Senior Full Stack Software Engineer"
+  description={siteProfile.heroIntro}
+>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  HERO                                                    ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section
+    id="hero"
+    class="relative min-h-screen flex flex-col justify-center px-6 pt-20 pb-16 overflow-hidden"
+    aria-label="Introduction"
+  >
+    {heroBg && (
+      <img
+        src={heroBg}
+        alt=""
+        role="presentation"
+        class="absolute inset-0 w-full h-full object-cover opacity-20"
+        loading="eager"
+      />
+    )}
+    <!-- subtle gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-[#0a0a0a]" aria-hidden="true"></div>
+
+    <div class="relative max-w-5xl mx-auto w-full">
+      <!-- Location label -->
+      <span class="section-label mb-6">{siteProfile.location}</span>
+
+      <!-- Name -->
+      <h1 class="display-heading text-[clamp(2.5rem,6vw,4.5rem)] font-bold tracking-tight mb-4 leading-[1.05]">
+        {siteProfile.displayName}
+      </h1>
+
+      <!-- Tagline -->
+      <p class="text-lg text-[#bbb] font-medium mb-4 max-w-xl">
+        {siteProfile.tagline}
+      </p>
+
+      <!-- Hero intro -->
+      <p class="text-sm text-[#666] leading-relaxed mb-8 max-w-lg">
+        {siteProfile.heroIntro}
+      </p>
+
+      <!-- CTAs -->
+      <div class="flex items-center gap-3 flex-wrap mb-10">
+        <a href="#work"    class="btn-primary">View work</a>
+        <a href="#contact" class="btn-ghost">Get in touch</a>
+        {siteSettings.cvUrl && (
+          <a href={siteSettings.cvUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">
+            Download CV ↓
+          </a>
+        )}
+      </div>
+
+      <!-- Role tags -->
+      <p class="text-xs text-[#444] font-mono tracking-wide">
+        {siteProfile.title}&nbsp;&nbsp;·&nbsp;&nbsp;<span id="yoe" data-career-start={siteProfile.careerStartDate}>{yearsExperienceLabel}</span> Years Experience&nbsp;&nbsp;·&nbsp;&nbsp;Vue.js&nbsp;&nbsp;·&nbsp;&nbsp;React&nbsp;&nbsp;·&nbsp;&nbsp;Full-Stack
+      </p>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  WORK  #work                                            ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section id="work" class="max-w-5xl mx-auto px-6 py-28" aria-labelledby="work-heading">
+    <span class="section-label">Selected Work</span>
+    <h2 id="work-heading" class="display-heading mb-14">Products that moved the needle</h2>
+
+    <div class="space-y-0 divide-y divide-[#1e1e1e]">
+      {featuredProjects.map((p, i) => (
+        <article class="flex gap-6 py-10 group" aria-label={p.title}>
+          <!-- Number -->
+          <span class="work-num pt-1">{String(i + 1).padStart(2, "0")}</span>
+
+          <!-- Content -->
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+              <h3 class="font-semibold text-[#f0f0f0] text-base leading-snug group-hover:text-white transition-colors">
+                {p.title}
+              </h3>
+              <!-- Tech tags dot-joined -->
+              <p class="text-xs text-[#555] font-mono flex-shrink-0">
+                {p.tags.join(" · ")}
+              </p>
+            </div>
+            <p class="text-sm text-[#777] leading-relaxed max-w-2xl">
+              {p.summary}
+            </p>
+            {(p.github_url || p.live_url) && (
+              <div class="flex gap-4 mt-3">
+                {p.githubUrl && (
+                  <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" class="text-xs text-[#555] hover:text-[#aaa] transition-colors">
+                    GitHub ↗
+                  </a>
+                )}
+                {p.liveUrl && (
+                  <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" class="text-xs text-[#555] hover:text-[#aaa] transition-colors">
+                    Live ↗
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  EXPERIENCE  #experience                               ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section id="experience" class="max-w-5xl mx-auto px-6 py-28 border-t border-[#1e1e1e]" aria-labelledby="exp-heading">
+    <span class="section-label">Experience</span>
+    <h2 id="exp-heading" class="display-heading mb-14">Where I've built</h2>
+
+    <div class="space-y-0 divide-y divide-[#1e1e1e]">
+      {experiences.map((exp) => (
+        <article class="py-10" aria-label={`${exp.role} at ${exp.company}`}>
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-4">
+            <div>
+              <h3 class="font-semibold text-[#f0f0f0] text-base">{exp.company}</h3>
+              <p class="text-sm text-[#666] mt-0.5">{exp.role}</p>
+            </div>
+            <p class="text-xs text-[#444] font-mono mt-1 sm:mt-0 flex-shrink-0">
+              {period(exp.periodStart, exp.periodEnd)}
+            </p>
+          </div>
+          <ul class="space-y-1.5">
+            {exp.highlights.slice(0, 3).map((h) => (
+              <li class="text-sm text-[#777] flex gap-2.5 leading-relaxed">
+                <span class="text-[#333] mt-0.5 flex-shrink-0">—</span>
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  SKILLS  #skills                                        ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section id="skills" class="max-w-5xl mx-auto px-6 py-28 border-t border-[#1e1e1e]" aria-labelledby="skills-heading">
+    <span class="section-label">Skills</span>
+    <h2 id="skills-heading" class="display-heading mb-14">Tools I reach for</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {Object.entries(skillGroups).filter(([, items]) => items.length > 0).map(([label, items]) => (
+        <div>
+          <h3 class="text-xs font-mono text-[#555] uppercase tracking-widest mb-4">{label}</h3>
+          <ul class="space-y-2" role="list">
+            {items.map((s) => (
+              <li class="text-sm text-[#888]">{s.name}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  ABOUT  #about                                          ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section id="about" class="max-w-5xl mx-auto px-6 py-28 border-t border-[#1e1e1e]" aria-labelledby="about-heading">
+    <span class="section-label">About</span>
+    <h2 id="about-heading" class="display-heading mb-14">Engineer, builder, collaborator</h2>
+
+    <div class="grid md:grid-cols-3 gap-12 items-start">
+      <!-- Bio -->
+      <div class="md:col-span-2 space-y-4">
+        {(siteProfile.aboutBio).split("\n\n").map((para) => (
+          <p class="text-sm text-[#888] leading-relaxed">{para}</p>
+        ))}
+
+        <div class="flex gap-4 flex-wrap pt-2">
+          {siteSettings.cvUrl && (
+            <a href={siteSettings.cvUrl} target="_blank" rel="noopener noreferrer" class="text-sm text-[#aaa] hover:text-white transition-colors underline underline-offset-4">
+              Download full CV (PDF) ↓
+            </a>
+          )}
+        </div>
+
+        <!-- Education -->
+        {education.length > 0 && (
+          <div class="pt-6 space-y-4 border-t border-[#1e1e1e]">
+            {education.map((edu) => (
+              <div>
+                <p class="text-sm text-[#f0f0f0] font-medium">{edu.institution}</p>
+                <p class="text-xs text-[#666] mt-0.5">{edu.degree} · {edu.field} · {edu.periodStart.slice(0,4)}–{edu.periodEnd?.slice(0,4) ?? "Present"}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <p class="text-xs text-[#444] font-mono pt-2">Based in {siteProfile.location}. Open to interesting product and engineering collaborations.</p>
+      </div>
+
+      <!-- Profile photo -->
+      {siteSettings.profileImageUrl && (
+        <div class="flex justify-center md:justify-end">
+          <img
+            src={siteSettings.profileImageUrl}
+            alt={`Portrait of ${siteProfile.fullName}`}
+            width="200"
+            height="200"
+            loading="lazy"
+            class="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover border border-[#1e1e1e]"
+          />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗ -->
+  <!-- ║  CONTACT  #contact                                      ║ -->
+  <!-- ╚══════════════════════════════════════════════════════════╝ -->
+  <section id="contact" class="max-w-5xl mx-auto px-6 py-28 border-t border-[#1e1e1e]" aria-labelledby="contact-heading">
+    <span class="section-label">Contact</span>
+    <h2 id="contact-heading" class="display-heading mb-4">Let's build something</h2>
+    <p class="text-sm text-[#666] mb-14 max-w-md">
+      Tell me about your project or role. I usually reply within a couple of days.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-14">
+      <!-- Links -->
+      <div class="space-y-5">
+        {siteProfile.linkedinUrl && (
+          <a
+            href={siteProfile.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 text-sm text-[#aaa] hover:text-white transition-colors group"
+          >
+            <span class="text-[#333] group-hover:text-[#777] transition-colors font-mono text-xs">in</span>
+            LinkedIn ↗
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var yoeEl = document.getElementById("yoe");
+      if (!yoeEl) return;
+      var startRaw = yoeEl.getAttribute("data-career-start");
+      if (!startRaw) return;
+
+      var start = new Date(startRaw);
+      if (Number.isNaN(start.getTime())) return;
+
+      var now = new Date();
+      var years = now.getFullYear() - start.getFullYear();
+      var beforeAnniversary =
+        now.getMonth() < start.getMonth() ||
+        (now.getMonth() === start.getMonth() && now.getDate() < start.getDate());
+      if (beforeAnniversary) years -= 1;
+
+      yoeEl.textContent = String(Math.max(0, years)) + "+";
+    })();
+  </script>
+
+</BaseLayout>

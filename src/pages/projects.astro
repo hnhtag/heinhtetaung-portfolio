@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { projects } from "@/lib/site-content";
+
+const categories = ["All", ...new Set(projects.map((p) => p.category))];
+---
+
+<BaseLayout
+  title="Projects — Hein Htet Aung"
+  description="Portfolio of web and enterprise projects by Hein Htet Aung."
+>
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-20">
+    <h1 class="section-heading mb-4">Projects</h1>
+    <p class="text-neutral-400 mb-10 max-w-2xl">A selection of work spanning FinTech, enterprise platforms, and open-source contributions.</p>
+
+    <!-- Filter tabs -->
+    <div class="flex flex-wrap gap-2 mb-10" role="group" aria-label="Filter projects by category">
+      {categories.map((cat) => (
+        <button
+          type="button"
+          data-filter={cat}
+          class:list={[
+            "px-3 py-1.5 rounded-full text-xs font-medium transition-colors border",
+            cat === "All"
+              ? "bg-brand text-white border-brand"
+              : "border-surface-border text-neutral-400 hover:border-brand/40 hover:text-neutral-200"
+          ]}
+          aria-pressed={cat === "All" ? "true" : "false"}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Grid -->
+    <div id="projects-grid" class="grid sm:grid-cols-2 gap-5">
+      {projects.map((p) => (
+        <article
+          class="card-glow flex flex-col gap-3"
+          data-category={p.category}
+        >
+          {p.image_url && (
+            <img
+              src={p.imageUrl}
+              alt={p.title}
+              width="600"
+              height="300"
+              loading="lazy"
+              class="w-full h-40 object-cover rounded-lg"
+            />
+          )}
+          <div class="flex flex-wrap gap-2">
+            <span class="badge">{p.category}</span>
+            {p.tags.slice(0, 3).map((t) => <span class="badge">{t}</span>)}
+          </div>
+          <h2 class="font-semibold text-neutral-100">{p.title}</h2>
+          <p class="text-sm text-neutral-400 leading-relaxed flex-1">{p.summary}</p>
+          <div class="flex items-center gap-3 mt-2">
+            {p.githubUrl && (
+              <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">GitHub ↗</a>
+            )}
+            {p.liveUrl && (
+              <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" class="text-xs text-brand hover:underline">Live ↗</a>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Client-side category filter
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const cards   = document.querySelectorAll<HTMLElement>("[data-category]");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter ?? "All";
+      buttons.forEach((b) => {
+        const active = b.dataset.filter === filter;
+        b.classList.toggle("bg-brand",         active);
+        b.classList.toggle("text-white",       active);
+        b.classList.toggle("border-brand",     active);
+        b.classList.toggle("text-neutral-400", !active);
+        b.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+      cards.forEach((card) => {
+        card.style.display =
+          filter === "All" || card.dataset.category === filter ? "" : "none";
+      });
+    });
+  });
+</script>

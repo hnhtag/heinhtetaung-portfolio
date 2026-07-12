@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/* ── Design tokens (Tailwind v4 CSS-first @theme) ─────────────────────────── */
+@theme {
+  --color-brand:          #6366f1;
+  --color-brand-dark:     #818cf8;
+  --color-surface:        #0a0a0a;
+  --color-surface-muted:  #111111;
+  --color-surface-border: #1e1e1e;
+
+  --font-family-sans: "Inter", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  --radius-DEFAULT: 0.5rem;
+  --radius-lg:      0.75rem;
+  --radius-xl:      1rem;
+
+  --shadow-glow:    0 0 24px 0 rgb(99 102 241 / 0.18);
+  --shadow-glow-sm: 0 0 10px 0 rgb(99 102 241 / 0.12);
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+@layer base {
+  :root { color-scheme: dark light; }
+
+  html { scroll-behavior: smooth; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: #f0f0f0;
+    font-family: var(--font-family-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px #888, 0 0 0 4px var(--color-surface);
+    border-radius: var(--radius-DEFAULT);
+  }
+}
+
+/* ── Components ────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* Section label — "SELECTED WORK", "EXPERIENCE", etc. */
+  .section-label {
+    font-family: var(--font-family-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #555;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  /* Display heading — large section title */
+  .display-heading {
+    font-size: clamp(1.875rem, 4vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #f0f0f0;
+  }
+
+  /* Number badge for work cards */
+  .work-num {
+    font-family: var(--font-family-mono);
+    font-size: 0.6875rem;
+    color: #444;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    padding-top: 0.125rem;
+  }
+
+  /* Tech tag — dot-separated label */
+  .tech-tag {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 400;
+  }
+
+  .card-glow {
+    background-color: var(--color-surface-muted);
+    border: 1px solid var(--color-surface-border);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    transition: border-color 200ms;
+  }
+  .card-glow:hover {
+    border-color: #333;
+  }
+
+  .section-heading {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+    color: #f0f0f0;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: #1a1a1a;
+    color: #888;
+    border: 1px solid #2a2a2a;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-lg);
+    background-color: #f0f0f0;
+    color: #0a0a0a;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: background-color 150ms;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background-color: #d4d4d4; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid #2a2a2a;
+    color: #aaa;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: border-color 150ms, color 150ms;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: #555; color: #f0f0f0; }
+
+  .form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-lg);
+    background-color: #111;
+    border: 1px solid #222;
+    color: #f0f0f0;
+    font-size: 0.875rem;
+    transition: border-color 150ms;
+  }
+  .form-input::placeholder { color: #555; }
+  .form-input:focus {
+    outline: none;
+    border-color: #555;
+  }
+}
