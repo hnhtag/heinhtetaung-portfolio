@@ -7,9 +7,7 @@ export interface SiteProfile {
   tagline: string;
   heroIntro: string;
   aboutBio: string;
-  email: string;
   linkedinUrl: string;
-  githubUrl: string;
 }
 
 export interface SiteSettings {
@@ -68,9 +66,7 @@ export const siteProfile: SiteProfile = {
     "Software Engineer building enterprise web applications and services across FinTech, ERP, and e-commerce systems.",
   aboutBio:
     "I am a software engineer specializing in enterprise web applications and services.\n\nI thrive in collaborative, cross-functional environments and focus on transforming complex business requirements into robust technical solutions. Beyond writing clean and maintainable code, I bring strong capabilities in team management, cross-team collaboration, and rapid troubleshooting to ensure successful delivery.",
-  email: "heinhtaung@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/hnhtag",
-  githubUrl: "https://github.com/hnhtag",
 };
 
 export const siteSettings: SiteSettings = {
