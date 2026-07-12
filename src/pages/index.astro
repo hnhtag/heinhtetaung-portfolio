@@ -129,7 +129,7 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
             <p class="text-sm text-[#777] leading-relaxed max-w-2xl">
               {p.summary}
             </p>
-            {(p.github_url || p.live_url) && (
+            {(p.githubUrl || p.liveUrl) && (
               <div class="flex gap-4 mt-3">
                 {p.githubUrl && (
                   <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" class="text-xs text-[#555] hover:text-[#aaa] transition-colors">
@@ -186,7 +186,7 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
   <!-- ╚══════════════════════════════════════════════════════════╝ -->
   <section id="skills" class="max-w-5xl mx-auto px-6 py-28 border-t border-[#1e1e1e]" aria-labelledby="skills-heading">
     <span class="section-label">Skills</span>
-    <h2 id="skills-heading" class="display-heading mb-14">Tools I reach for</h2>
+    <h2 id="skills-heading" class="display-heading mb-14">What I know</h2>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {Object.entries(skillGroups).filter(([, items]) => items.length > 0).map(([label, items]) => (
@@ -194,7 +194,10 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
           <h3 class="text-xs font-mono text-[#555] uppercase tracking-widest mb-4">{label}</h3>
           <ul class="space-y-2" role="list">
             {items.map((s) => (
-              <li class="text-sm text-[#888]">{s.name}</li>
+              <li class="text-sm text-[#888] flex items-center justify-between gap-3">
+                <span>{s.name}</span>
+                <span class="text-[11px] uppercase tracking-wide text-[#555]">{s.proficiency}</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -248,7 +251,7 @@ const yearsExperienceLabel = yearsOfExperience(siteProfile.careerStartDate);
             width="200"
             height="200"
             loading="lazy"
-            class="w-40 h-40 sm:w-48 sm:h-48 rounded-xl object-cover border border-[#1e1e1e]"
+            class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border border-[#1e1e1e]"
           />
         </div>
       )}

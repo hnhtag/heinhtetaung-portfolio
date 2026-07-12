@@ -67,7 +67,7 @@ export const siteProfile: SiteProfile = {
   heroIntro:
     "Software Engineer building enterprise web applications and services across FinTech, ERP, and e-commerce systems.",
   aboutBio:
-    "I am a Software Engineer with professional experience specializing in enterprise web application and service development.\n\nI thrive in collaborative, cross-functional environments and focus on transforming complex business requirements into robust technical solutions. Beyond writing clean and maintainable code, I bring strong capabilities in team management, cross-team collaboration, and rapid troubleshooting to ensure successful delivery.",
+    "I am a software engineer specializing in enterprise web applications and services.\n\nI thrive in collaborative, cross-functional environments and focus on transforming complex business requirements into robust technical solutions. Beyond writing clean and maintainable code, I bring strong capabilities in team management, cross-team collaboration, and rapid troubleshooting to ensure successful delivery.",
   email: "heinhtaung@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/hnhtag",
   githubUrl: "https://github.com/hnhtag",
@@ -85,28 +85,23 @@ export const siteSettings: SiteSettings = {
 };
 
 export const skills: SkillItem[] = [
-  { name: "HTML", category: "core" },
-  { name: "CSS", category: "core" },
-  { name: "SASS", category: "core" },
-  { name: "JavaScript", category: "core" },
-  { name: "TypeScript", category: "core" },
   { name: "C#", category: "core" },
-  { name: "Vue.js", category: "framework" },
-  { name: "Nuxt.js", category: "framework" },
-  { name: "React.js", category: "framework" },
-  { name: "Next.js", category: "framework" },
+  { name: "HTML/CSS", category: "core" },
+  { name: "TypeScript/JavaScript", category: "core" },
+  { name: "Sass", category: "core" },
+  { name: ".NET", category: "framework" },
   { name: "Node.js", category: "framework" },
-  { name: "Nest.js", category: "framework" },
-  { name: ".Net", category: "framework" },
+  { name: "Express/NestJS", category: "framework" },
+  { name: "Vue.js/Nuxt.js", category: "framework" },
+  { name: "React.js/Next.js", category: "framework" },
+  { name: "Agile/Scrum", category: "tool" },
   { name: "Git", category: "tool" },
-  { name: "Agile and Scrum", category: "tool" },
+  { name: "SEO/Responsive", category: "tool" },
   { name: "Storybook", category: "tool" },
-  { name: "Responsive web design", category: "tool" },
-  { name: "SEO", category: "tool" },
-  { name: "Unit testing (Vitest, Jest)", category: "tool" },
-  { name: "FinTech", category: "domain" },
+  { name: "Unit/E2E Testing", category: "tool" },
+  { name: "E-Commerce", category: "domain" },
   { name: "ERP", category: "domain" },
-  { name: "E-commerce", category: "domain" },
+  { name: "FinTech", category: "domain" },
 ];
 
 export const experiences: ExperienceItem[] = [
@@ -153,8 +148,8 @@ export const experiences: ExperienceItem[] = [
     periodStart: "2018-06",
     periodEnd: "2023-12",
     highlights: [
-      "Delivered a broad portfolio of products including e-procurement, global sourcing, import/export, e-commerce, CMS, expo, order and delivery, POS, warehouse, LMS, and training systems.",
-      "Contributed major improvements across ERP and business platforms, including store management, sales flow, barcode features, retail shift assignment, and warehouse product/category modules.",
+      "Delivered enterprise platforms spanning e-procurement, global sourcing, import/export, e-commerce, CMS, expo, order and delivery, POS, warehouse, LMS, and training systems.",
+      "Improved ERP and retail operations through store management, sales flow, barcode, shift-assignment, and warehouse product/category enhancements.",
       "Supported strategic product initiatives beyond delivery work, including Myanmar ethnic Unicode font development and mentoring within long-running platform teams.",
     ],
   },
@@ -220,7 +215,7 @@ export const projects: ProjectItem[] = [
     title: "JUDO E-Commerce and Order Delivery Ecosystem",
     summary:
       "Scaled key e-commerce and order delivery journeys across catalog, checkout, and fulfillment flows to support day-to-day business growth.",
-    category: "E-commerce",
+    category: "E-Commerce",
     tags: ["Checkout", "Order Flow", "Fulfillment"],
     githubUrl: null,
     liveUrl: null,
@@ -231,7 +226,7 @@ export const projects: ProjectItem[] = [
     title: "ERP and Retail Operations Improvements",
     summary:
       "Improved ERP, POS, and warehouse modules including sales, barcode, and shift-assignment features to increase operational efficiency.",
-    category: "ERP and Retail",
+    category: "ERP & Retail",
     tags: ["ERP", "POS", "Warehouse"],
     githubUrl: null,
     liveUrl: null,
