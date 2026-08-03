@@ -7,16 +7,27 @@ import { siteProfile } from "@/lib/site-content";
   title="Contact — Hein Htet Aung"
   description="Get in touch with Hein Htet Aung."
 >
-  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-20">
-    <h1 class="section-heading mb-4">Get In Touch</h1>
-    <p class="text-neutral-400 mb-10 max-w-lg">
-      Have a project in mind or just want to connect? Reach out directly through one of the channels below.
-    </p>
+  <div class="max-w-5xl mx-auto px-6 pt-28 pb-20">
+    <div class="reveal max-w-xl">
+      <span class="section-label">Contact</span>
+      <h1 class="section-heading mb-4">Say hello</h1>
+      <p class="text-muted mb-10">
+        Have a product problem, a team that needs another steady hand, or just want to compare notes? I usually reply within a couple of days.
+      </p>
 
-    <div class="card-glow space-y-4">
-      <a href={`mailto:${siteProfile.email}`} class="btn-primary">Email me</a>
-      <a href={siteProfile.linkedinUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">LinkedIn</a>
-      <a href={siteProfile.githubUrl} target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub</a>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
+        {siteProfile.linkedinUrl && (
+          <a
+            href={siteProfile.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary"
+          >
+            LinkedIn
+          </a>
+        )}
+        <a href="/#work" class="text-link text-[0.975rem]">Or browse the work first</a>
+      </div>
     </div>
   </div>
 </BaseLayout>

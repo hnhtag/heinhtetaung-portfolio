@@ -61,11 +61,11 @@ export const siteProfile: SiteProfile = {
   location: "Yangon, Myanmar",
   careerStartDate: "2018-06-01",
   tagline:
-    "Crafting efficient, scalable enterprise web applications and FinTech solutions.",
+    "I build the systems banks, warehouses, and commerce teams lean on every day.",
   heroIntro:
-    "Software Engineer building enterprise web applications and services across FinTech, ERP, and e-commerce systems.",
+    "Senior full-stack engineer in Yangon — FinTech, ERP, and e-commerce platforms that have to work in the real world.",
   aboutBio:
-    "I am a software engineer specializing in enterprise web applications and services.\n\nI thrive in collaborative, cross-functional environments and focus on transforming complex business requirements into robust technical solutions. Beyond writing clean and maintainable code, I bring strong capabilities in team management, cross-team collaboration, and rapid troubleshooting to ensure successful delivery.",
+    "I’m a software engineer who spends most days turning messy business requirements into dependable web systems — the kind ops teams open every morning without thinking twice.\n\nI’ve led small delivery teams, worked across local and international product groups, and stayed close to the unglamorous parts: integrations, workflows, and the troubleshooting that keeps a release honest. Clean code matters; so does shipping something people can trust.",
   linkedinUrl: "https://www.linkedin.com/in/hnhtag",
 };
 
