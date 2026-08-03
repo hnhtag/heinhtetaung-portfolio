@@ -28,7 +28,7 @@ const shortName = "Zest";
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={description} />
   <meta name="author" content="Hein Htet Aung" />
-  <meta name="theme-color" content="#eef1f4" />
+      <meta name="theme-color" content="#e8eef2" />
 
   <link rel="canonical" href={canonical} />
   <link rel="icon" type="image/x-icon" href={faviconUrl} />
@@ -88,7 +88,7 @@ const shortName = "Zest";
         ))}
       </ul>
 
-      <a href="/#contact" class="btn-ghost !py-1.5 !px-3.5 !text-sm">
+      <a href="/#contact" class="nav-link text-[0.9375rem] font-medium text-ink">
         Contact
       </a>
     </nav>
@@ -117,10 +117,10 @@ const shortName = "Zest";
         var y = window.pageYOffset;
 
         if (y > 64) {
-          header.style.backgroundColor = "rgba(247,249,251,0.88)";
+          header.style.backgroundColor = "rgba(243,246,248,0.9)";
           header.style.backdropFilter = "blur(12px)";
           header.style.webkitBackdropFilter = "blur(12px)";
-          header.style.borderBottom = "1px solid rgba(208,216,222,0.9)";
+          header.style.borderBottom = "1px solid rgba(197,206,214,0.95)";
 
           if (y > lastY + 4) {
             header.style.transform = "translateY(-100%)";
